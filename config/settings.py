@@ -29,7 +29,15 @@ SECRET_KEY = get_env('SECRET_KEY', 'secret')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_env('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_env('ALLOWED_HOSTS', '*').split(',')
+CSRF_TRUSTED_ORIGINS = get_env(
+    'CSRF_TRUSTED_ORIGINS', 'https://*,http://*').split(',')
+
+# CORS
+# CORS_ALLOWED_ORIGINS = ALLOWED_HOSTS if '*' not in ALLOWED_HOSTS else []
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:4200',
+]
 
 
 # Application definition
