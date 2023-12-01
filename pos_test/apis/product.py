@@ -37,7 +37,11 @@ class ProductList(generics.ListAPIView):
         barcode = self.request.query_params.get('barcode')
         if barcode:
             data = super().get(request, *args, **kwargs)
-            data = data.data[0] if data.data else {}
-            return Response({"data":data},status=200)
+            if not data.data:
+                return Response({"detail":"producto no existe"},status=400)
+            
+            return Response({"data":data.data[0]},status=200)
+        else:
+            return Response({'detail':'consulte por codigo de barra'},status=400)
         return super().get(request, *args, **kwargs)
     
